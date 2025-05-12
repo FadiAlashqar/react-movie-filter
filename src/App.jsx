@@ -10,6 +10,15 @@ function App() {
     { id: 6, title: 'Pulp Fiction', genre: 'Fantascienza' },
   ]
   const [genre, setGenre] = useState("");
+  const [updateedArray, setUpdatedArray] = useState(initialFilms);
+  useEffect(() => {
+    if (genre === "") {
+      setUpdatedArray(initialFilms);
+    } else {
+      const filteredArray = initialFilms.filter((film) => film.genre === genre);
+      setUpdatedArray(filteredArray);
+    }
+  }, [genre]);
 
   return (
     <>
@@ -22,7 +31,7 @@ function App() {
         <div className="row">
           <div className="col-12">
             <select className="form-select mb-3" onChange={(e) => setGenre(e.target.value)}>
-              <option defaultValue>Select genre...</option>
+              <option value>Select genre...</option>
               <option value="Fantascienza">Fantascienza</option>
               <option value="Thriller">Thriller</option>
               <option value="Romantico">Romantico</option>
@@ -34,7 +43,7 @@ function App() {
         <div className="row">
           <div className="col-12">
             <ul className="list-group">
-              {initialFilms.map((film) => {
+              {updateedArray.map((film) => {
                 return <li key={`film : ${film.id}`} className="list-group-item">
                   <div>TITOLO : {film.title}</div>
                   <div>GENERE : {film.genre}</div>
